@@ -39,8 +39,6 @@ Analytics Marts
 Power BI Dashboards
 ```
 
-![Architecture](docs/architecture.png)
-
 ---
 
 # 🛠 Technology Stack
@@ -182,16 +180,16 @@ The bridge table resolves the many-to-many relationship between movies and genre
 # 📈 Dashboard Showcase
 
 ## Executive Dashboard
-![Executive Dashboard](powerbi/screenshots/executive_dashboard.png)
+![Executive Dashboard](power_bi/screenshots/executive_dashboard.png)
 
 ## Movie Analytics Dashboard
-![Movie Dashboard](powerbi/screenshots/movie_dashboard.png)
+![Movie Dashboard](power_bi/screenshots/movie_dashboard.png)
 
 ## User Analytics Dashboard
-![User Dashboard](powerbi/screenshots/user_dashboard.png)
+![User Dashboard](power_bi/screenshots/user_dashboard.png)
 
 ## Genre Analytics Dashboard
-![Genre Dashboard](powerbi/screenshots/genre_dashboard.png)
+![Genre Dashboard](power_bi/screenshots/genre_dashboard.png)
 
 ---
 

@@ -1,0 +1,27 @@
+version: 2
+
+models:
+
+  - name: mart_user_analytics
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+
+  - name: mart_movie_analytics
+    columns:
+      - name: movie_id
+        tests:
+          - not_null
+
+  - name: mart_genre_analytics
+    columns:
+      - name: genre
+        tests:
+          - not_null
+
+  - name: mart_recommendation
+    columns:
+      - name: movie_id
+        tests:
+          - not_null

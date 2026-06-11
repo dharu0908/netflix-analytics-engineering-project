@@ -1,0 +1,61 @@
+version: 2
+
+sources:
+  - name: movielens
+    description: MovieLens 20M dataset loaded into Snowflake RAW schema
+
+    database: MOVIELENS
+    schema: RAW
+
+    tables:
+
+      - name: movies
+        identifier: RAW_MOVIES
+        description: Movie metadata (title, genres)
+
+        columns:
+          - name: movieid
+            tests:
+              - not_null
+
+      - name: ratings
+        identifier: RAW_RATINGS
+        description: User ratings for movies
+
+        columns:
+          - name: userid
+            tests:
+              - not_null
+
+          - name: movieid
+            tests:
+              - not_null
+
+          - name: rating
+            tests:
+              - not_null
+
+      - name: tags
+        identifier: RAW_TAGS
+        description: User generated tags for movies
+
+        columns:
+          - name: userid
+            tests:
+              - not_null
+
+          - name: movieid
+            tests:
+              - not_null
+
+      - name: links
+        identifier: RAW_LINKS
+        description: IMDB and TMDB IDs mapping
+
+      - name: genome_scores
+        identifier: RAW_GENOME_SCORES
+        description: Movie-tag relevance scores
+
+      - name: genome_tags
+        identifier: RAW_GENOME_TAGS
+        description: Genome tag dictionary

@@ -1,0 +1,52 @@
+# =========================
+# DBT ARTIFACTS (AUTO-GENERATED)
+# =========================
+target/
+dbt_packages/
+logs/
+run_results.json
+manifest.json
+catalog.json
+
+# =========================
+# SENSITIVE FILES (IMPORTANT)
+# =========================
+.env
+.env.*
+profiles.yml
+
+# Snowflake credentials backup files
+*.key
+*.pem
+
+# =========================
+# PYTHON
+# =========================
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# virtual environments
+venv/
+.venv/
+env/
+
+# =========================
+# IDE FILES
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS FILES
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# DBT LOCAL CACHE (optional but safe)
+# =========================
+.dbt/

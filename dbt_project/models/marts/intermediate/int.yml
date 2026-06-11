@@ -1,0 +1,78 @@
+version: 2
+
+models:
+
+  # =========================
+  # INT: MOVIE PERFORMANCE
+  # =========================
+  - name: int_movies
+    description: Movie level aggregated performance metrics
+
+    columns:
+
+      - name: movie_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_movies')
+              field: movie_id
+
+      - name: avg_rating
+        tests:
+          - not_null
+
+      - name: total_ratings
+        tests:
+          - not_null
+
+
+  # =========================
+  # INT: USER GENRE AFFINITY
+  # =========================
+  - name: int_user_genre_affinity
+    description: User preference ranking by genre
+
+    columns:
+
+      - name: user_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_id
+
+      - name: genre
+        tests:
+          - not_null
+
+      - name: genre_rank
+        tests:
+          - not_null
+
+      
+
+
+  # =========================
+  # INT: USER ACTIVITY (if you have it)
+  # =========================
+  - name: int_user_activity
+    description: User engagement metrics over time
+
+    columns:
+
+      - name: user_id
+        tests:
+          - unique
+          - not_null
+
+      - name: total_ratings
+        tests:
+          - not_null
+
+      - name: avg_rating_given
+        tests:
+          - not_null
+
+      - name: activity_status
+        tests:
+          - not_null

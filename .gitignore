@@ -1,0 +1,28 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Logs
+logs/
+
+# Secrets
+snowflake_netflix_user_accessKeys.csv
+
+# Environment files
+.env
+.env.*
+
+# dbt artifacts
+target/
+dbt_packages/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+#data
+ml-20m/

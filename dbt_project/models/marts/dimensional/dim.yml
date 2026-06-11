@@ -1,0 +1,35 @@
+version: 2
+
+models:
+
+  # =====================
+  # DIM USERS
+  # =====================
+  - name: dim_users
+    columns:
+      - name: user_id
+        tests:
+          - unique
+          - not_null
+
+
+  # =====================
+  # DIM MOVIES
+  # =====================
+  - name: dim_movies
+    columns:
+      - name: movie_id
+        tests:
+          - unique
+          - not_null
+
+
+  # =====================
+  # DIM GENOME TAGS
+  # =====================
+  - name: dim_genome_tags
+    columns:
+      - name: tag_id
+        tests:
+          - unique
+          - not_null

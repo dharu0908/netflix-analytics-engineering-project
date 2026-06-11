@@ -1,0 +1,140 @@
+version: 2
+
+models:
+
+  # =========================
+  # RATINGS STAGING
+  # =========================
+  - name: src_ratings
+    description: Clean staging model for user ratings
+
+    columns:
+
+      - name: user_id
+        description: Unique identifier for user
+        tests:
+          - not_null
+
+      - name: movie_id
+        description: Unique identifier for movie
+        tests:
+          - not_null
+
+      - name: rating
+        description: Rating given by user (0.5 to 5.0 scale)
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+
+      - name: rated_at
+        description: Timestamp when rating was given
+        tests:
+          - not_null
+
+
+  # =========================
+  # MOVIES STAGING
+  # =========================
+  - name: src_movies
+    description: Clean staging model for movies metadata
+
+    columns:
+
+      - name: movie_id
+        description: Unique movie identifier
+        tests:
+          - not_null
+          - unique
+
+      - name: title
+        description: Movie title
+        tests:
+          - not_null
+
+      - name: genres
+        description: Pipe-separated movie genres
+        tests:
+          - not_null
+
+
+  # =========================
+  # TAGS STAGING
+  # =========================
+  - name: src_tags
+    description: User-generated movie tags
+
+    columns:
+
+      - name: user_id
+        tests:
+          - not_null
+
+      - name: movie_id
+        tests:
+          - not_null
+
+      - name: tag
+        tests:
+          - not_null
+
+      - name: tagged_at
+        tests:
+          - not_null
+
+
+  # =========================
+  # LINKS STAGING
+  # =========================
+  - name: src_links
+    description: External movie IDs mapping (IMDB, TMDB)
+
+    columns:
+
+      - name: movie_id
+        tests:
+          - not_null
+          - unique
+
+      - name: imdb_id
+        tests:
+          - not_null
+
+
+  # =========================
+  # GENOME TAGS
+  # =========================
+  - name: src_genome_tags
+    description: Dictionary of genome tags
+
+    columns:
+
+      - name: tag_id
+        tests:
+          - not_null
+          - unique
+
+      - name: tag
+        tests:
+          - not_null
+
+
+  # =========================
+  # GENOME SCORES
+  # =========================
+  - name: src_genome_scores
+    description: Relevance scores for movie-tag combinations
+
+    columns:
+
+      - name: movie_id
+        tests:
+          - not_null
+
+      - name: tag_id
+        tests:
+          - not_null
+
+      - name: relevance
+        tests:
+          - not_null

@@ -1,0 +1,66 @@
+version: 2
+
+models:
+
+  # =========================
+  # FACT: RATINGS
+  # =========================
+  - name: fct_ratings
+    description: User movie rating events
+
+    columns:
+
+      - name: rating_key
+        tests:
+          - unique
+          - not_null
+
+      - name: user_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_id
+
+      - name: movie_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_movies')
+              field: movie_id
+
+      - name: rating
+        tests:
+          - not_null
+
+
+  # =========================
+  # FACT: TAGS
+  # =========================
+  - name: fct_tags
+    description: User movie tagging events
+
+    columns:
+
+      - name: tag_event_key
+        tests:
+          - unique
+          - not_null
+
+      - name: user_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_id
+
+      - name: movie_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_movies')
+              field: movie_id
+
+      - name: tagged_at
+        tests:
+          - not_null

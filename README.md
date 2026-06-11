@@ -107,7 +107,7 @@ The warehouse follows a dimensional modeling approach.
 
 The bridge table resolves the many-to-many relationship between movies and genres and enables accurate genre-level analytics.
 
-![Star Schema](docs/star_schema.png)
+![Star Schema](docs/star_schema_simple.png)
 
 ---
 

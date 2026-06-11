@@ -192,7 +192,7 @@ Insights:
 - User Activity Distribution
 - Movie Catalog Distribution by Decade
 
-![Executive Dashboard](powerbi/screenshots/executive_dashboard.png)
+![Executive Dashboard](power_bi/screenshots/executive_dashboard.png)
 
 ---
 
@@ -204,7 +204,7 @@ Answers:
 - Which movies have the highest ratings?
 - Which movies are trending?
 
-![Movie Dashboard](powerbi/screenshots/movie_dashboard.png)
+![Movie Dashboard](power_bi/screenshots/movie_dashboard.png)
 
 ---
 
@@ -216,7 +216,7 @@ Answers:
 - Which users are becoming inactive?
 - How long do users remain engaged?
 
-![User Dashboard](powerbi/screenshots/user_dashboard.png)
+![User Dashboard](power_bi/screenshots/user_dashboard.png)
 
 ---
 
@@ -227,7 +227,7 @@ Answers:
 - Which genres perform best?
 - Which genres drive engagement?
 
-![Genre Dashboard](powerbi/screenshots/genre_dashboard.png)
+![Genre Dashboard](power_bi/screenshots/genre_dashboard.png)
 
 ---
 

@@ -2,19 +2,40 @@ name: Netflix Analytics CI
 
 on:
   push:
+    branches:
+      - main
+      - master
+
   pull_request:
+    branches:
+      - main
+      - master
 
 jobs:
   validate:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Validate dbt project structure
+      - name: Validate dbt Project Structure
         run: |
           test -f dbt_project.yml
           test -d models
           test -d snapshots
           test -d macros
-          echo "dbt project structure validated"
+          echo "dbt project structure validated successfully"
+
+      - name: Display Project Structure
+        run: |
+          ls -la
+          echo ""
+          echo "Models:"
+          ls -la models
+          echo ""
+          echo "Snapshots:"
+          ls -la snapshots
+          echo ""
+          echo "Macros:"
+          ls -la macros

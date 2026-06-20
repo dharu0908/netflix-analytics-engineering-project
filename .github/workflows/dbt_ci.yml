@@ -21,21 +21,34 @@ jobs:
 
       - name: Validate dbt Project Structure
         run: |
-          test -f dbt_project.yml
-          test -d models
-          test -d snapshots
-          test -d macros
+          test -f dbt_project/dbt_project.yml
+          test -d dbt_project/models
+          test -d dbt_project/snapshots
+          test -d dbt_project/macros
+          test -d dbt_project/tests
           echo "dbt project structure validated successfully"
 
       - name: Display Project Structure
         run: |
+          echo "Repository Root:"
           ls -la
+
+          echo ""
+          echo "dbt Project:"
+          ls -la dbt_project
+
           echo ""
           echo "Models:"
-          ls -la models
+          ls -la dbt_project/models
+
           echo ""
           echo "Snapshots:"
-          ls -la snapshots
+          ls -la dbt_project/snapshots
+
           echo ""
           echo "Macros:"
-          ls -la macros
+          ls -la dbt_project/macros
+
+          echo ""
+          echo "Tests:"
+          ls -la dbt_project/tests

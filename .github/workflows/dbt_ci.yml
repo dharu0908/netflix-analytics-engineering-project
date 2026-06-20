@@ -20,6 +20,6 @@ jobs:
           pip install dbt-core
           pip install dbt-snowflake
 
-      - name: Validate SQL
+      - name: Validate dbt project
         run: |
-          python -m py_compile .
+          dbt parse

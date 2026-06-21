@@ -6,7 +6,7 @@ Streaming platforms generate millions of user interactions every day, but raw ra
 
 This project transforms the MovieLens 20M dataset into a modern Analytics Engineering platform using AWS S3, Snowflake, dbt, Power BI, and GitHub Actions.
 
-The solution follows industry-standard analytics engineering practices, including dimensional modeling, incremental processing, snapshots, data quality testing, analytics marts, and CI/CD automation.
+The solution follows industry-standard analytics engineering practices including dimensional modeling, incremental processing, snapshots, data quality testing, analytics marts, and CI/CD automation.
 
 The platform enables stakeholders to:
 
@@ -20,16 +20,16 @@ The platform enables stakeholders to:
 
 ## Business Problem
 
-A streaming platform generates millions of ratings, tags, and movie interactions.
+Streaming platforms collect millions of ratings, tags, and movie interactions.
 
-However, raw transactional data makes it difficult to answer business questions such as:
+However, raw transactional datasets make it difficult to answer business questions such as:
 
 - Which movies perform best?
-- Which genres drive engagement?
+- Which genres drive the most engagement?
 - Who are the most active users?
 - What genres does each user prefer?
-- Which movies should be recommended next?
-- How has user behavior changed over time?
+- Which users are becoming inactive?
+- What movies should be recommended next?
 
 This project solves these challenges by building a scalable analytics platform that transforms raw interaction data into business-ready dimensional models and analytics marts.
 
@@ -111,7 +111,7 @@ The warehouse follows a dimensional modeling approach.
 - dim_users
 - dim_genome_tags
 
-### Bridge Tables
+### Bridge Table
 
 - bridge_movie_genres
 
@@ -134,13 +134,6 @@ The transformation layer follows a layered dbt architecture.
 - src_genome_tags
 - src_genome_scores
 
-### Staging Layer
-
-- Standardized source data
-- Type casting
-- Data cleansing
-- Column renaming
-
 ### Intermediate Layer
 
 - int_movie_performance
@@ -148,16 +141,16 @@ The transformation layer follows a layered dbt architecture.
 - int_user_genre_affinity
 - int_genre_performance
 
-### Dimensional Layer
-
-- dim_movies
-- dim_users
-- dim_genome_tags
-
 ### Fact Layer
 
 - fct_ratings
 - fct_tags
+
+### Dimension Layer
+
+- dim_movies
+- dim_users
+- dim_genome_tags
 
 ### Analytics Mart Layer
 
@@ -172,12 +165,12 @@ The transformation layer follows a layered dbt architecture.
 
 ## Data Quality Framework
 
-The project includes a comprehensive data quality layer implemented through dbt tests.
+The project includes a comprehensive data quality framework implemented using dbt tests.
 
 ### Validation Checks
 
 - Unique key validation
-- Null validation
+- Not null validation
 - Relationship testing
 - Accepted values testing
 - Referential integrity checks
@@ -188,7 +181,7 @@ The project includes a comprehensive data quality layer implemented through dbt 
 - Fact table validation
 - Dimension table validation
 - Bridge table validation
-- Mart validation
+- Analytics mart validation
 
 This ensures analytical consistency across all reporting layers.
 
@@ -198,7 +191,7 @@ This ensures analytical consistency across all reporting layers.
 
 The ratings fact table is implemented as an incremental model.
 
-Benefits:
+Benefits include:
 
 - Faster pipeline execution
 - Reduced Snowflake compute costs
@@ -229,7 +222,7 @@ Historical changes are tracked using dbt Snapshots.
 
 - User activity history
 - Tag history
-- Recommendation behavior
+- Recommendation tracking
 
 Benefits:
 
@@ -241,7 +234,7 @@ Benefits:
 
 ## Analytics Marts
 
-Business-ready marts were created for self-service analytics.
+Business-ready marts were created to support self-service analytics.
 
 ### Movie Analytics
 
@@ -249,9 +242,7 @@ Answers:
 
 - Which movies perform best?
 - Which movies are trending?
-- Which release decades perform best?
-
----
+- Which decades produce the strongest movie performance?
 
 ### User Analytics
 
@@ -261,8 +252,6 @@ Answers:
 - How frequently do users rate movies?
 - Which users are becoming inactive?
 
----
-
 ### Genre Analytics
 
 Answers:
@@ -270,8 +259,6 @@ Answers:
 - Which genres drive engagement?
 - Which genres receive the highest ratings?
 - Which genres attract the largest audiences?
-
----
 
 ### Recommendation Analytics
 
@@ -291,15 +278,15 @@ Answers:
 
 ### Movie Analytics Dashboard
 
-![Movie Analytics](power_bi/screenshots/movie_dashboard.png)
+![Movie Dashboard](power_bi/screenshots/movie_dashboard.png)
 
 ### User Analytics Dashboard
 
-![User Analytics](power_bi/screenshots/user_dashboard.png)
+![User Dashboard](power_bi/screenshots/user_dashboard.png)
 
 ### Genre Analytics Dashboard
 
-![Genre Analytics](power_bi/screenshots/genre_dashboard.png)
+![Genre Dashboard](power_bi/screenshots/genre_dashboard.png)
 
 ---
 
@@ -319,39 +306,15 @@ Answers:
 
 ### Genre Analytics
 
-- Drama and Comedy generate the highest engagement.
-- Niche genres often receive higher average ratings.
-- Genre preference patterns provide strong recommendation signals.
+- Drama and Comedy drive the highest engagement.
+- Niche genres attract fewer users but achieve higher average ratings.
+- Genre preferences provide strong signals for recommendation systems.
 
 ### Recommendation Analytics
 
-- Users with similar genre affinity can be grouped together.
+- Users with similar genre preferences can be grouped together.
 - Historical ratings and tagging behavior improve recommendation quality.
 - Recommendation marts simplify downstream recommendation workflows.
-
----
-
-## CI/CD Automation
-
-GitHub Actions is used to automate dbt validation and testing.
-
-### Automated Workflow
-
-On every push and pull request:
-
-- dbt deps
-- dbt seed
-- dbt run
-- dbt test
-
-Benefits:
-
-- Continuous validation
-- Automated quality checks
-- Faster development cycles
-- Reduced deployment risk
-
-![GitHub Actions](docs/github_actions_success.png)
 
 ---
 
@@ -361,13 +324,13 @@ Benefits:
 
 - AWS S3 ingestion layer
 - Snowflake external stages
-- COPY INTO loading strategy
-- Incremental processing
+- COPY INTO ingestion
+- Incremental loading
 
 ### Analytics Engineering
 
 - Layered dbt architecture
-- Sources
+- Source models
 - Staging models
 - Intermediate models
 - Fact models
@@ -385,7 +348,15 @@ Benefits:
 
 - 60+ dbt tests
 - Automated validation
-- CI/CD integration
+- Relationship testing
+- Snapshot auditing
+
+### DevOps & Automation
+
+- GitHub Actions CI/CD pipeline
+- Automated project validation
+- Repository structure verification
+- Continuous integration checks
 
 ### Reporting
 
@@ -411,7 +382,7 @@ Benefits:
 
 ---
 
-## Repository Structure
+## Project Structure
 
 ```text
 netflix-analytics-engineering-platform/
@@ -435,8 +406,7 @@ netflix-analytics-engineering-platform/
 │
 ├── docs/
 │   ├── dbt_lineage.png
-│   ├── star_schema_simple.png
-│   └── github_actions_success.png
+│   └── star_schema_simple.png
 │
 ├── .github/
 │   └── workflows/

@@ -2,87 +2,25 @@
 
 ## Overview
 
-Streaming platforms generate millions of user interactions every day, but raw ratings and tagging data provide limited business value without proper modeling and transformation.
+This project transforms the MovieLens 20M dataset into a modern Analytics Engineering platform using AWS S3, Snowflake, dbt, SQL, Power BI, and GitHub Actions.
 
-This project transforms the MovieLens 20M dataset into a modern Analytics Engineering platform using AWS S3, Snowflake, dbt, Power BI, and GitHub Actions.
-
-The solution follows industry-standard analytics engineering practices including dimensional modeling, incremental processing, snapshots, data quality testing, analytics marts, and CI/CD automation.
-
-The platform enables stakeholders to:
-
-- Analyze movie performance
-- Understand user engagement patterns
-- Track genre trends
-- Support recommendation strategies
-- Deliver self-service analytics through curated marts and dashboards
+The platform converts raw movie ratings and user interactions into business-ready datasets that support movie analytics, user analytics, genre analysis, and recommendation-ready reporting.
 
 ---
 
-## Business Problem
-
-Streaming platforms collect millions of ratings, tags, and movie interactions.
-
-However, raw transactional datasets make it difficult to answer business questions such as:
-
-- Which movies perform best?
-- Which genres drive the most engagement?
-- Who are the most active users?
-- What genres does each user prefer?
-- Which users are becoming inactive?
-- What movies should be recommended next?
-
-This project solves these challenges by building a scalable analytics platform that transforms raw interaction data into business-ready dimensional models and analytics marts.
-
----
-
-## Dataset
-
-### MovieLens 20M Dataset
-
-| Metric | Value |
-|----------|----------|
-| Movies | 27,278 |
-| Users | 138,493 |
-| Ratings | 20,000,263 |
-| Tags | 465,564 |
-| Genome Tags | 1,128 |
-| Genome Scores | 11M+ |
-
-### Source Files
-
-- movies.csv
-- ratings.csv
-- tags.csv
-- links.csv
-- genome-tags.csv
-- genome-scores.csv
-
----
-
-## Solution Architecture
-
-The platform follows a modern Analytics Engineering architecture.
+## Architecture
 
 ```text
 MovieLens Dataset
         │
         ▼
-AWS S3 Bucket
+AWS S3
         │
         ▼
-Snowflake External Stage
+Snowflake
         │
         ▼
-RAW Tables
-        │
-        ▼
-dbt Sources
-        │
-        ▼
-dbt Staging Models
-        │
-        ▼
-dbt Intermediate Models
+dbt
         │
         ▼
 Fact & Dimension Models
@@ -96,9 +34,34 @@ Power BI Dashboards
 
 ---
 
-## Data Model
+## Technology Stack
 
-The warehouse follows a dimensional modeling approach.
+| Layer | Technology |
+|---------|------------|
+| Storage | AWS S3 |
+| Data Warehouse | Snowflake |
+| Transformation | dbt |
+| Analytics Engineering | SQL |
+| Visualization | Power BI |
+| Data Quality | dbt Tests |
+| Historical Tracking | dbt Snapshots |
+| CI/CD | GitHub Actions |
+| Version Control | Git & GitHub |
+
+---
+
+## Dataset
+
+MovieLens 20M Dataset
+
+- 20M+ Ratings
+- 465K+ Tags
+- 27K+ Movies
+- 138K+ Users
+
+---
+
+## Data Model
 
 ### Fact Tables
 
@@ -115,44 +78,29 @@ The warehouse follows a dimensional modeling approach.
 
 - bridge_movie_genres
 
-The bridge table resolves the many-to-many relationship between movies and genres and enables accurate genre-level analytics.
+The bridge table enables accurate genre-level analytics by resolving the many-to-many relationship between movies and genres.
 
 ![Star Schema](docs/star_schema_simple.png)
 
 ---
 
-## dbt Lineage
+## dbt Pipeline
 
-The transformation layer follows a layered dbt architecture.
-
-### Source Layer
+### Sources
 
 - src_movies
 - src_ratings
 - src_tags
 - src_links
-- src_genome_tags
-- src_genome_scores
 
-### Intermediate Layer
+### Intermediate Models
 
 - int_movie_performance
 - int_user_activity
 - int_user_genre_affinity
 - int_genre_performance
 
-### Fact Layer
-
-- fct_ratings
-- fct_tags
-
-### Dimension Layer
-
-- dim_movies
-- dim_users
-- dim_genome_tags
-
-### Analytics Mart Layer
+### Analytics Marts
 
 - mart_movie_analytics
 - mart_user_analytics
@@ -163,110 +111,58 @@ The transformation layer follows a layered dbt architecture.
 
 ---
 
-## Data Quality Framework
+## Key Features
 
-The project includes a comprehensive data quality framework implemented using dbt tests.
+### Incremental Processing
 
-### Validation Checks
+Implemented incremental loading in `fct_ratings` to process only new ratings.
 
-- Unique key validation
-- Not null validation
-- Relationship testing
-- Accepted values testing
-- Referential integrity checks
+### Data Quality
 
-### Coverage
+Implemented 60+ dbt tests including:
 
-- 60+ dbt tests
-- Fact table validation
-- Dimension table validation
-- Bridge table validation
-- Analytics mart validation
+- Unique tests
+- Not null tests
+- Relationship tests
+- Accepted values tests
 
-This ensures analytical consistency across all reporting layers.
+### Historical Tracking
 
----
+Implemented dbt snapshots:
 
-## Incremental Processing
+- snap_movie_performance
+- snap_tags
+- snap_user_activity
 
-The ratings fact table is implemented as an incremental model.
+### CI/CD
 
-Benefits include:
-
-- Faster pipeline execution
-- Reduced Snowflake compute costs
-- Scalable processing of new ratings
-- Production-ready ELT design
-
-Example:
-
-```sql
-{% if is_incremental() %}
-
-where rating_timestamp >
-(
-    select max(rating_timestamp)
-    from {{ this }}
-)
-
-{% endif %}
-```
+Implemented GitHub Actions to automatically validate the dbt project on every push and pull request.
 
 ---
 
-## Historical Tracking
-
-Historical changes are tracked using dbt Snapshots.
-
-### Snapshot Coverage
-
-- User activity history
-- Tag history
-- Recommendation tracking
-
-Benefits:
-
-- Historical auditability
-- Trend analysis
-- Slowly changing dimension support
-
----
-
-## Analytics Marts
-
-Business-ready marts were created to support self-service analytics.
+## Business Questions Answered
 
 ### Movie Analytics
 
-Answers:
-
 - Which movies perform best?
 - Which movies are trending?
-- Which decades produce the strongest movie performance?
+- Which decades perform best?
 
 ### User Analytics
 
-Answers:
-
 - Who are the most active users?
-- How frequently do users rate movies?
 - Which users are becoming inactive?
 
 ### Genre Analytics
 
-Answers:
-
 - Which genres drive engagement?
 - Which genres receive the highest ratings?
-- Which genres attract the largest audiences?
 
 ### Recommendation Analytics
 
-Answers:
-
-- What movie should be recommended next?
-- Which users have similar preferences?
-- Which genres should be prioritized?
+- User genre affinity analysis
+- Similar audience identification
+- Recommendation-ready datasets
 
 ---
 
@@ -290,148 +186,14 @@ Answers:
 
 ---
 
-## Key Business Insights
-
-### User Engagement
-
-- A small percentage of users generate a large share of ratings.
-- Long-tenured users interact with a broader range of genres.
-- User activity gradually declines over time.
-
-### Movie Performance
-
-- Highly rated movies are not always the most popular.
-- Trending score analysis helps identify movies balancing popularity and quality.
-- Certain release decades consistently outperform others.
-
-### Genre Analytics
-
-- Drama and Comedy drive the highest engagement.
-- Niche genres attract fewer users but achieve higher average ratings.
-- Genre preferences provide strong signals for recommendation systems.
-
-### Recommendation Analytics
-
-- Users with similar genre preferences can be grouped together.
-- Historical ratings and tagging behavior improve recommendation quality.
-- Recommendation marts simplify downstream recommendation workflows.
-
----
-
-## Technical Highlights
-
-### Data Engineering
-
-- AWS S3 ingestion layer
-- Snowflake external stages
-- COPY INTO ingestion
-- Incremental loading
-
-### Analytics Engineering
-
-- Layered dbt architecture
-- Source models
-- Staging models
-- Intermediate models
-- Fact models
-- Dimension models
-- Analytics marts
-
-### Data Modeling
-
-- Star schema design
-- Bridge table implementation
-- Surrogate key generation
-- Relationship modeling
-
-### Data Quality
-
-- 60+ dbt tests
-- Automated validation
-- Relationship testing
-- Snapshot auditing
-
-### DevOps & Automation
-
-- GitHub Actions CI/CD pipeline
-- Automated project validation
-- Repository structure verification
-- Continuous integration checks
-
-### Reporting
-
-- Power BI dashboards
-- Executive reporting
-- Self-service analytics
-
----
-
-## Technology Stack
-
-| Layer | Technology |
-|---------|------------|
-| Storage | AWS S3 |
-| Data Warehouse | Snowflake |
-| Transformation | dbt |
-| Analytics Engineering | SQL |
-| Visualization | Power BI |
-| Data Quality | dbt Tests |
-| Historical Tracking | dbt Snapshots |
-| CI/CD | GitHub Actions |
-| Version Control | Git & GitHub |
-
----
-
-## Project Structure
-
-```text
-netflix-analytics-engineering-platform/
-│
-├── models/
-│   ├── staging/
-│   ├── intermediate/
-│   ├── dimensions/
-│   ├── facts/
-│   ├── bridge/
-│   └── marts/
-│
-├── snapshots/
-│
-├── tests/
-│
-├── macros/
-│
-├── power_bi/
-│   └── screenshots/
-│
-├── docs/
-│   ├── dbt_lineage.png
-│   └── star_schema_simple.png
-│
-├── .github/
-│   └── workflows/
-│
-└── README.md
-```
-
----
-
 ## Project Outcomes
 
-This project demonstrates:
-
-- End-to-end Analytics Engineering
-- Cloud Data Warehousing using Snowflake
-- Modern ELT development using dbt
-- Dimensional Modeling
-- Incremental Processing
-- Data Quality Testing
-- Historical Data Tracking
-- Recommendation Analytics
-- Dashboard Development
-- CI/CD Automation using GitHub Actions
-
-Most importantly, the platform transforms over 20 million user interactions into scalable, business-ready analytics that support reporting, user engagement analysis, genre performance analysis, and recommendation workflows.
+- Built an end-to-end Analytics Engineering platform using AWS S3, Snowflake, dbt, and Power BI.
+- Processed over 20 million movie ratings and interactions.
+- Implemented dimensional modeling using fact, dimension, and bridge tables.
+- Developed incremental pipelines and historical snapshots.
+- Created business-ready analytics marts.
+- Automated validation using dbt tests and GitHub Actions.
 
 ---
 
@@ -444,17 +206,7 @@ Most importantly, the platform transforms over 20 million user interactions into
 - SQL
 - Data Modeling
 - Incremental ELT
-- Dimensional Modeling
 - Data Quality Testing
 - Snapshots
 - Power BI
 - GitHub Actions
-- Business Intelligence
-
----
-
-## Dataset
-
-MovieLens 20M Dataset
-
-https://grouplens.org/datasets/movielens/20m/
